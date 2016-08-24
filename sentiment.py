@@ -29,7 +29,7 @@ class TweetStreamListener(StreamListener):
 
         print sentiment
 
-         es.index(index="sentiment",
+        es.index(index="sentiment",
                  doc_type="test-type",
                  body={"author": dict_data["user"]["screen_name"],
                        "date": dict_data["created_at"],
