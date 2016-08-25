@@ -4,6 +4,8 @@ from tweepy import OAuthHandler
 from tweepy import Stream
 from textblob import TextBlob
 from elasticsearch import Elasticsearch
+import time
+from datetime import datetime
 
 # import twitter keys and tokens
 from config import *
@@ -30,12 +32,13 @@ class TweetStreamListener(StreamListener):
 
         print sentiment
         
+        time_stamp = time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(dict_data["created_at"],'%a %b %d %H:%M:%S +0000 %Y'))
         scoring =  (1-tweet.sentiment.subjectivity)*tweet.sentiment.polarity
 
         es.index(index="stocks",
                  doc_type="Amazon",
                  body={"company": dict_data["user"]["screen_name"],
-                       "created_at": dict_data["created_at"],
+                       "created_at": time_stamp,
                        "message": dict_data["text"],
                        "polarity": tweet.sentiment.polarity,
                        "subjectivity": tweet.sentiment.subjectivity,
