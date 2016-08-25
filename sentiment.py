@@ -20,8 +20,8 @@ class TweetStreamListener(StreamListener):
 
     	dict_data = json.loads(data)
         if 'text' in dict_data:
-    	   tweet = TextBlob(dict_data["text"])
-    	   # print tweet.sentiment.polarity
+            tweet = TextBlob(dict_data["text"])
+    	    # print tweet.sentiment.polarity
             if tweet.sentiment.polarity < 0:
                 sentiment = "negative"
             elif tweet.sentiment.polarity == 0:
