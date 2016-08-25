@@ -33,12 +33,14 @@ class TweetStreamListener(StreamListener):
         print sentiment
         
         time_stamp = time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(dict_data["created_at"],'%a %b %d %H:%M:%S +0000 %Y'))
+        p='%Y-%m-%d %H:%M:%S'
+        epoch = int(time.mktime(time.strptime(d,p)))
         scoring =  (1-tweet.sentiment.subjectivity)*tweet.sentiment.polarity
 
         es.index(index="stocks",
                  doc_type="Amazon",
                  body={"company": dict_data["user"]["screen_name"],
-                       "created_at": time_stamp,
+                       "created_at": epoch,
                        "message": dict_data["text"],
                        "polarity": tweet.sentiment.polarity,
                        "subjectivity": tweet.sentiment.subjectivity,
