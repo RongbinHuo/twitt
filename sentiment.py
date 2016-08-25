@@ -33,8 +33,8 @@ class TweetStreamListener(StreamListener):
 
         print sentiment
         
-        time_stamp = time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(dict_data["created_at"],'%a %b %d %H:%M:%S +0000 %Y'))
-        # time_stamp = datetime.strptime(dict_data["created_at"],'%a %b %d %H:%M:%S +0000 %Y').replace(tzinfo=pytz.UTC)
+        # time_stamp = time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(dict_data["created_at"],'%a %b %d %H:%M:%S +0000 %Y'))
+        time_stamp = datetime.strptime(dict_data["created_at"],'%a %b %d %H:%M:%S +0000 %Y').replace(tzinfo=pytz.UTC).strftime("%Y-%m-%d %H:%M:%S")
         p='%Y-%m-%d %H:%M:%S'
         epoch = int(time.mktime(time.strptime(time_stamp,p)))
         scoring =  (1-tweet.sentiment.subjectivity)*tweet.sentiment.polarity
