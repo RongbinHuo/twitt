@@ -20,19 +20,19 @@ class TweetStreamListener(StreamListener):
 
     	dict_data = json.loads(data)
         if 'text' in dict_data:
-        	tweet = TextBlob(dict_data["text"])
+    	   tweet = TextBlob(dict_data["text"])
 
-        	# print tweet.sentiment.polarity
+    	   # print tweet.sentiment.polarity
 
-        	if tweet.sentiment.polarity < 0:
+    	    if tweet.sentiment.polarity < 0:
                 sentiment = "negative"
             elif tweet.sentiment.polarity == 0:
                 sentiment = "neutral"
             else:
                 sentiment = "positive"
 
-            # print sentiment
-            
+             # print sentiment
+        
             # time_stamp = time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(dict_data["created_at"],'%a %b %d %H:%M:%S +0000 %Y'))
             time_stamp = datetime.strptime(dict_data["created_at"],'%a %b %d %H:%M:%S +0000 %Y').replace(tzinfo=pytz.UTC).strftime("%Y-%m-%d %H:%M:%S")
             p='%Y-%m-%d %H:%M:%S'
@@ -40,14 +40,14 @@ class TweetStreamListener(StreamListener):
             scoring =  (1-tweet.sentiment.subjectivity)*tweet.sentiment.polarity
 
             es.index(index="stocks",
-                     doc_type="Amazon",
-                     body={"company": dict_data["user"]["screen_name"],
-                           "created_at": epoch,
-                           "message": dict_data["text"],
-                           "polarity": tweet.sentiment.polarity,
-                           "subjectivity": tweet.sentiment.subjectivity,
-                           "sentiment": sentiment,
-                           "scoring": scoring})
+                 doc_type="Amazon",
+                 body={"company": dict_data["user"]["screen_name"],
+                       "created_at": epoch,
+                       "message": dict_data["text"],
+                       "polarity": tweet.sentiment.polarity,
+                       "subjectivity": tweet.sentiment.subjectivity,
+                       "sentiment": sentiment,
+                       "scoring": scoring})
 
         return True
 
