@@ -9,7 +9,8 @@ from elasticsearch import Elasticsearch
 from config import *
 
 es = Elasticsearch()
-
+company = 'Amazon'
+stock = "$AMZN"
 class TweetStreamListener(StreamListener):
 	# on success
     def on_data(self, data):
@@ -28,15 +29,18 @@ class TweetStreamListener(StreamListener):
             sentiment = "positive"
 
         print sentiment
+        
+        scoring =  (1-tweet.sentiment.subjectivity)*tweet.sentiment.polarity
 
-        es.index(index="sentiment",
-                 doc_type="test-type",
-                 body={"author": dict_data["user"]["screen_name"],
-                       "date": dict_data["created_at"],
+        es.index(index="stocks",
+                 doc_type="Amazon",
+                 body={"company": dict_data["user"]["screen_name"],
+                       "created_at": dict_data["created_at"],
                        "message": dict_data["text"],
                        "polarity": tweet.sentiment.polarity,
                        "subjectivity": tweet.sentiment.subjectivity,
-                       "sentiment": sentiment})
+                       "sentiment": sentiment,
+                       "scoring": scoring})
 
         return True
 
@@ -57,4 +61,4 @@ if __name__ == '__main__':
     stream = Stream(auth, listener)
 
     # search twitter for "congress" keyword
-    stream.filter(track=['congress'])
+    stream.filter(track=[company, stock])
