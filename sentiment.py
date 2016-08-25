@@ -22,7 +22,7 @@ class TweetStreamListener(StreamListener):
 
     	tweet = TextBlob(dict_data["text"])
 
-    	print tweet.sentiment.polarity
+    	# print tweet.sentiment.polarity
 
     	if tweet.sentiment.polarity < 0:
             sentiment = "negative"
@@ -31,7 +31,7 @@ class TweetStreamListener(StreamListener):
         else:
             sentiment = "positive"
 
-        print sentiment
+        # print sentiment
         
         # time_stamp = time.strftime('%Y-%m-%d %H:%M:%S', time.strptime(dict_data["created_at"],'%a %b %d %H:%M:%S +0000 %Y'))
         time_stamp = datetime.strptime(dict_data["created_at"],'%a %b %d %H:%M:%S +0000 %Y').replace(tzinfo=pytz.UTC).strftime("%Y-%m-%d %H:%M:%S")
