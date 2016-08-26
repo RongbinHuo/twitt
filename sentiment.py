@@ -66,4 +66,4 @@ if __name__ == '__main__':
     stream = Stream(auth, listener)
 
     # search twitter for "congress" keyword
-    stream.filter(track=[company, stock])
+    stream.filter(track=[stock])
