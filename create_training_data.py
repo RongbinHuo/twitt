@@ -13,8 +13,8 @@ yahoo = Share('AMZN')
 # res = es.search(index='stocks',doc_type='Amazon', body={ "size": 0, "aggs": { "count_by_type": { "terms": { "field": '_type'}}}})
 res = es.search(index='stocks',doc_type='Amazon', body={ "size": 0, "aggs": { "avg_grade": { "avg": { "field": 'scoring'}}}})
 avg_score_all_data = res["aggregations"]["avg_grade"]["value"]
-stock_year_high = yahoo.get_year_high()
-stock_year_low = yahoo.get_year_low()
+stock_year_high = float(yahoo.get_year_high())
+stock_year_low = float(yahoo.get_year_low())
 # res = es.search(index='stocks',doc_type='Amazon', body={ "size": 0, "aggs": { "min_time": { "min": { "field": 'created_at'}}}})
 # min_timestamp = res["aggregations"]["min_time"]["value"]
 # res = es.search(index='stocks',doc_type='Amazon', body={ "size": 0, "aggs": { "max_time": { "max": { "field": 'created_at'}}}})
@@ -33,13 +33,12 @@ for data in dataset:
 		  "aggs": { "avg_grade": { "avg": { "field": 'scoring'}}}})
 	score_range_avg_pre = avg_score_all_data if res["aggregations"]["avg_grade"]["value"] == None else res["aggregations"]["avg_grade"]["value"]
 	quote_data = data[1]
-	quote_data_year_high_percent = (stock_year_high - quote_data)/quote_data
-	quote_data_year_low_percent = (quote_data - stock_year_low)/stock_year_low
-	quote_data_increase = (quote_data-original_quote)/original_quote
+	quote_data_year_percent = (stock_year_high - quote_data)/(quote_data - stock_year_low)
+	quote_data_increase = quote_data_year_percent * (quote_data-original_quote)/original_quote
 	scoring_increase_overall = (score_range_avg-avg_score_all_data)/avg_score_all_data
 	scoring_increase_than_pre = (score_range_avg-score_range_avg_pre)/score_range_avg_pre
 	if score_range_avg > 0:
-		train_data = quote_data_year_percent, scoring_increase_overall, scoring_increase_than_pre, quote_data_increase
+		train_data = quote_data_increase, quote_data_year_percent, scoring_increase_overall, scoring_increase_than_pre, quote_data_increase
 		train_arry = np.array(train_data)
 		with open(r'./data/train_data.csv', 'a') as f:
 			f.write(",".join(map(str, train_arry))+'\n')
