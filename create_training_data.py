@@ -31,7 +31,7 @@ for data in dataset:
 		  "aggs": { "avg_grade": { "avg": { "field": 'scoring'}}}})
 	score_range_avg_pre = res["aggregations"]["avg_grade"]["value"]
 	quote_data = data[1]
-	if range_avg > 0:
+	if score_range_avg > 0:
 		train_data = original_quote, score_range_avg_pre, score_range_avg, avg_score_all_data, quote_data
 		train_arry = numpy.array(train_data)
 		with open(r'./data/train_data.csv', 'a') as f:
