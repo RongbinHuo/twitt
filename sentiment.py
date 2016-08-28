@@ -7,6 +7,7 @@ from elasticsearch import Elasticsearch
 import time
 from datetime import datetime, tzinfo
 import pytz
+from googlefinance import getQuotes
 
 # import twitter keys and tokens
 from config import *
@@ -28,6 +29,7 @@ class TweetStreamListener(StreamListener):
                 sentiment = "neutral"
             else:
                 sentiment = "positive"
+            stock_quote = str(getQuotes('AMZN')[0]['LastTradePrice'])
 
             print sentiment
         
@@ -45,7 +47,8 @@ class TweetStreamListener(StreamListener):
                        "polarity": tweet.sentiment.polarity,
                        "subjectivity": tweet.sentiment.subjectivity,
                        "sentiment": sentiment,
-                       "scoring": scoring})
+                       "scoring": scoring,
+                       "current_quote": stock_quote})
 
         return True
 
