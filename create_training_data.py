@@ -36,9 +36,10 @@ for data in dataset:
 	quote_data_year_percent = (stock_year_high - quote_data)/(quote_data - stock_year_low)
 	quote_data_increase = quote_data_year_percent * (quote_data-original_quote)/original_quote
 	# scoring_increase_overall = (score_range_avg-avg_score_all_data)/avg_score_all_data
-	scoring_increase_than_pre = (score_range_avg-score_range_avg_pre)/score_range_avg_pre
+	# scoring_increase_than_pre = (score_range_avg-score_range_avg_pre)/score_range_avg_pre
 	if score_range_avg > 0 and score_range_avg !=None:
 		scoring_increase_overall = (score_range_avg-avg_score_all_data)/avg_score_all_data
+		scoring_increase_than_pre = (score_range_avg-score_range_avg_pre)/score_range_avg_pre
 		train_data = quote_data_increase, quote_data_year_percent, scoring_increase_overall, scoring_increase_than_pre, quote_data_increase
 		train_arry = np.array(train_data)
 		with open(r'./data/train_data.csv', 'a') as f:
