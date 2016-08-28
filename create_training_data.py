@@ -35,7 +35,7 @@ for data in dataset:
 		train_data = original_quote, score_range_avg_pre, score_range_avg, avg_score_all_data, quote_data
 		train_arry = numpy.array(train_data)
 		with open(r'./data/train_data.csv', 'a') as f:
-    		f.write(",".join(map(str, train_arry))+'\n')
+			f.write(",".join(map(str, train_arry))+'\n')
 
 	original_quote = quote_data
 
