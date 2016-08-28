@@ -30,7 +30,7 @@ for data in dataset:
 	res = es.search(index='stocks',doc_type='Amazon', body={ "size": 0, "query": { "range": { "created_at": {"lte": time_range_start}}}, 
 		  "aggs": { "avg_grade": { "avg": { "field": 'scoring'}}}})
 	score_range_avg_pre = res["aggregations"]["avg_grade"]["value"]
-	quote_data = data[0][1]
+	quote_data = data[1]
 	if range_avg > 0:
 		train_data = original_quote, score_range_avg_pre, score_range_avg, avg_score_all_data, quote_data
 		train_arry = numpy.array(train_data)
