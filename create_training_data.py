@@ -33,7 +33,7 @@ for data in dataset:
 	quote_data = data[1]
 	if score_range_avg > 0:
 		train_data = original_quote, score_range_avg_pre, score_range_avg, avg_score_all_data, quote_data
-		train_arry = numpy.array(train_data)
+		train_arry = np.array(train_data)
 		with open(r'./data/train_data.csv', 'a') as f:
 			f.write(",".join(map(str, train_arry))+'\n')
 
