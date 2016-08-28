@@ -29,22 +29,22 @@ ds = SDS( input_size, target_size )
 ds.setField( 'input', x_train )
 ds.setField( 'target', y_train )
 
-net = buildNetwork( input_size, hidden_size, target_size, hiddenclass=TanhLayer, bias = True )
+net = buildNetwork( input_size, hidden_size, target_size, bias = True )
 trainer = BackpropTrainer( net,ds )
 
 print "training for {} epochs...".format( epochs )
 
-for inp, tar in ds:
-    print [net.activate(inp), tar]
+# for inp, tar in ds:
+#     print [net.activate(inp), tar]
 
-trainer.trainUntilConvergence(maxEpochs=1000, continueEpochs=10, validationProportion=0.1)
+# trainer.trainUntilConvergence(maxEpochs=1000, continueEpochs=10, validationProportion=0.1)
 
-for inp, tar in ds:
-    print [net.activate(inp), tar]
+# for inp, tar in ds:
+#     print [net.activate(inp), tar]
 
-# for i in range( epochs ):
-# 	mse = trainer.train()
-# 	rmse = sqrt( mse )
-# 	print "training RMSE, epoch {}: {}".format( i + 1, rmse )
+for i in range( epochs ):
+	mse = trainer.train()
+	rmse = sqrt( mse )
+	print "training RMSE, epoch {}: {}".format( i + 1, rmse )
 
 pickle.dump( net, open( output_model_file, 'wb' ))
