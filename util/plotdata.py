@@ -12,7 +12,7 @@ y_train = y_train.reshape( -1, 1 )
 
 x_plot = []
 for x in x_train:
-	x_plot.append(x[1])
+	x_plot.append(x[0])
 
 y_plot = []
 for y in y_train:

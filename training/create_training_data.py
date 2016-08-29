@@ -33,8 +33,8 @@ for data in dataset:
 	p='%Y-%m-%d %H:%M:%S'
 	utc_epoch = int(time.mktime(time.strptime(utc_dt,p)))
 
-	time_range_start = utc_epoch - 60*60*2
-	time_range_end = utc_epoch - 60*60*1.5
+	time_range_start = utc_epoch - 60*60*3
+	time_range_end = utc_epoch - 60*60*2
 	res = es.search(index='stocks',doc_type='Amazon', body={ "size": 0, "query": { "range": { "created_at": { "gte": time_range_start, "lte": time_range_end}}}, 
 		  "aggs": { "avg_grade": { "avg": { "field": 'scoring'}}}})
 	score_range_avg = res["aggregations"]["avg_grade"]["value"]
@@ -42,7 +42,7 @@ for data in dataset:
 		  "aggs": { "avg_grade": { "avg": { "field": 'scoring'}}}})
 	score_range_avg_pre = res["aggregations"]["avg_grade"]["value"]
 	quote_data = data[1]
-	quote_data_year_percent = (stock_year_high - quote_data)/(quote_data - stock_year_low)
+	quote_data_year_percent = (quote_data - stock_year_low)/(stock_year_high - quote_data)
 	quote_data_increase = quote_data_year_percent*(quote_data - original_quote)/original_quote
 	# quote_data_increase = (quote_data-original_quote)/original_quote
 	# scoring_increase_overall = (score_range_avg-avg_score_all_data)/avg_score_all_data
