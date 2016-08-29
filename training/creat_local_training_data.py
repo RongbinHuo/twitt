@@ -10,14 +10,13 @@ date_now = int(time.time())
 date_passed_48_hours =  int(time.time()) - 72*60*60
 es = Elasticsearch()
 yahoo = Share('AMZN')
-res = es.search(index='stocks',doc_type='Amazon', body={ "size": 3000, "query": { "range": { "created_at": { "gte": date_passed_48_hours, "lte": date_now}}}})
 res = es.search(index='stocks',doc_type='Amazon', body={ "size": 0, "aggs": { "avg_grade": { "avg": { "field": 'scoring'}}}})
 avg_score_all_data = res["aggregations"]["avg_grade"]["value"]
 dataset = res["hits"]["hits"]
 stock_year_high = float(yahoo.get_year_high())
 stock_year_low = float(yahoo.get_year_low())
 
-# dataset = np.genfromtxt("../data/quote_data.csv", dtype=None, delimiter=',') 
+res = es.search(index='stocks',doc_type='Amazon', body={ "size": 3000, "query": { "range": { "created_at": { "gte": date_passed_48_hours, "lte": date_now}}}})
 original_quote = float(res["hits"]["hits"][0][u'_source'][u'current_quote'])
 for data in dataset:
 	utc_epoch = res["hits"]["hits"][0][u'_source'][u'created_at']
