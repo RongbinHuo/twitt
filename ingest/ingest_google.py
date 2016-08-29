@@ -10,7 +10,7 @@ import pytz
 from googlefinance import getQuotes
 
 # import twitter keys and tokens
-from config import *
+from ingest.config import *
 
 es = Elasticsearch()
 company = 'Google'
