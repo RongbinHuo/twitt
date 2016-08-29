@@ -25,7 +25,7 @@ original_quote = dataset[0][1]
 for data in dataset:
 	tmp_timestamp = data[0]
 
-	# convert from edt to utc
+	# convert from edt to utcd
 	pytz_eastern = pytz.timezone("America/New_York")
 	edt_dt = datetime.fromtimestamp(tmp_timestamp).replace(tzinfo=pytz_eastern)
 	tzinfo=pytz.UTC
@@ -52,7 +52,7 @@ for data in dataset:
 		scoring_increase_than_pre = (score_range_avg-score_range_avg_pre)/score_range_avg_pre
 		train_data = scoring_increase_overall, scoring_increase_than_pre, quote_data_increase
 		train_arry = np.array(train_data)
-		with open(r'./data/train_data.csv', 'a') as f:
+		with open(r'../data/train_data.csv', 'a') as f:
 			f.write(",".join(map(str, train_arry))+'\n')
 
 	original_quote = quote_data
