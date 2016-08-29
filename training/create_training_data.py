@@ -33,8 +33,8 @@ for data in dataset:
 	p='%Y-%m-%d %H:%M:%S'
 	utc_epoch = int(time.mktime(time.strptime(utc_dt,p)))
 
-	time_range_start = utc_epoch - 60*30
-	time_range_end = utc_epoch - 60*20
+	time_range_start = utc_epoch - 60*60*2
+	time_range_end = utc_epoch - 60*60*1.5
 	res = es.search(index='stocks',doc_type='Amazon', body={ "size": 0, "query": { "range": { "created_at": { "gte": time_range_start, "lte": time_range_end}}}, 
 		  "aggs": { "avg_grade": { "avg": { "field": 'scoring'}}}})
 	score_range_avg = res["aggregations"]["avg_grade"]["value"]

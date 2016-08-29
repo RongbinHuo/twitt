@@ -1,7 +1,7 @@
 import matplotlib.pyplot as plt
 import numpy as np
 
-train_file = 'data/train_data.csv'
+train_file = '../data/train_data.csv'
 
 
 train = np.loadtxt( train_file, delimiter = ',' )
