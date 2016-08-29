@@ -20,7 +20,7 @@ stock_year_low = float(yahoo.get_year_low())
 # res = es.search(index='stocks',doc_type='Amazon', body={ "size": 0, "aggs": { "max_time": { "max": { "field": 'created_at'}}}})
 # max_timestamp = res["aggregations"]["max_time"]["value"]
 
-dataset = np.genfromtxt("./data/quote_data.csv", dtype=None, delimiter=',') 
+dataset = np.genfromtxt("../data/quote_data.csv", dtype=None, delimiter=',') 
 original_quote = dataset[0][1]
 for data in dataset:
 	tmp_timestamp = data[0]
