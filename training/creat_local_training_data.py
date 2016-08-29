@@ -19,8 +19,7 @@ res = es.search(index='stocks',doc_type='Amazon', body={ "size": 3000, "query": 
 original_quote = float(res["hits"]["hits"][0][u'_source'][u'current_quote'])
 dataset = res["hits"]["hits"]
 for data in dataset:
-	utc_epoch = res["hits"]["hits"][0][u'_source'][u'created_at']
-
+	utc_epoch = data[u'_source'][u'created_at']
 	time_range_start = utc_epoch - 60*20
 	time_range_end = utc_epoch - 60*10
 	res = es.search(index='stocks',doc_type='Amazon', body={ "size": 0, "query": { "range": { "created_at": { "gte": time_range_start, "lte": time_range_end}}}, 
