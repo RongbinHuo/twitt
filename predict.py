@@ -2,7 +2,6 @@ import numpy as np
 import cPickle as pickle
 
 from math import sqrt
-from pybrain.datasets.supervised import SupervisedDataSet as SDS
 
 import sys, getopt
 
