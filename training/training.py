@@ -7,9 +7,9 @@ from pybrain.supervised.trainers import BackpropTrainer
 from pybrain.structure import TanhLayer
 from pybrain.structure.modules   import SoftmaxLayer
 
-train_file = 'data/train_data.csv'
-validation_file = 'data/validation.csv'
-output_model_file = 'model/model.pkl'
+train_file = '../data/train_data.csv'
+validation_file = '../data/validation.csv'
+output_model_file = '../model/model.pkl'
 
 hidden_size = 30
 epochs = 600
