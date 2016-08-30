@@ -65,3 +65,20 @@ for inp, tar in ds:
 		n1=n1+1
 	if net.activate(inp)[0] <-0.1 and tar[0] == 1.0:
 		m1=m1+1
+
+
+n=0
+m=0
+c=0
+n1=0
+m1=0
+for inp, tar in ds:
+	c = c+1
+	if net.activate(inp)[0] > 0 and tar[0] == 1.0:
+		n=n+1
+	if net.activate(inp)[0] < 0 and tar[0] == -1.0:
+		m=m+1
+	if net.activate(inp)[0] > 0 and tar[0] == -1.0:
+		n1=n1+1
+	if net.activate(inp)[0] < 0 and tar[0] == 1.0:
+		m1=m1+1

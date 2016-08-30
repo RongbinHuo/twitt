@@ -25,7 +25,7 @@ for x in x_train:
 
 y_plot = []
 for y in y_train:
-	y_plot.append(y[0]*100000)
+	y_plot.append(y[0])
 
 n=0
 m=0
