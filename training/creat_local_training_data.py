@@ -20,7 +20,7 @@ original_quote = float(res["hits"]["hits"][0][u'_source'][u'current_quote'])
 dataset = res["hits"]["hits"]
 for data in dataset:
 	utc_epoch = data[u'_source'][u'created_at']
-	dt = dt.fromtimestamp(utc_epoch)
+	dt = datetime.fromtimestamp(utc_epoch)
 	y_m_d = dt.strftime('%Y-%m-%d')
 	stock_day_range_high = yahoo.get_historical(y_m_d,y_m_d)[0]['High']
 	stock_day_range_low = yahoo.get_historical(y_m_d,y_m_d)[0]['Low']
