@@ -22,8 +22,8 @@ for data in dataset:
 	utc_epoch = data[u'_source'][u'created_at']
 	dt = datetime.fromtimestamp(utc_epoch)
 	y_m_d = dt.strftime('%Y-%m-%d')
-	stock_day_range_high = yahoo.get_historical(y_m_d,y_m_d)[0]['High']
-	stock_day_range_low = yahoo.get_historical(y_m_d,y_m_d)[0]['Low']
+	stock_day_range_high = float(yahoo.get_historical(y_m_d,y_m_d)[0]['High'])
+	stock_day_range_low = float(yahoo.get_historical(y_m_d,y_m_d)[0]['Low'])
 	time_range_start = utc_epoch - 60*60*3
 	time_range_end = utc_epoch - 60*60*2
 	res = es.search(index='stocks',doc_type='Amazon', body={ "size": 0, "query": { "range": { "created_at": { "gte": time_range_start, "lte": time_range_end}}}, 
