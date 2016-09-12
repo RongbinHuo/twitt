@@ -2,4 +2,5 @@
 .DS_Store
 env
 config.py
-.ipynb
+*.ipynb
+.ipynb_checkpoints/
