@@ -7,6 +7,7 @@ from elasticsearch import Elasticsearch
 import time
 from datetime import datetime, tzinfo
 import pytz
+import MySQLdb
 from googlefinance import getQuotes
 
 # import twitter keys and tokens
@@ -15,6 +16,9 @@ from config import *
 es = Elasticsearch()
 company = 'Amazon'
 stock = "$AMZN"
+myDB = MySQLdb.connect(host="rongbin.cdpxz2jepyxw.us-east-1.rds.amazonaws.com",port=3306,user="root",passwd="12345678",db="twit")
+cHandler = myDB.cursor()
+insert_query = """INSERT INTO ratings (company_id, created_at, rating, polarity, subjectivity, message, current_price) VALUES (%s,%s,%s,%s,%s,%s,%s)"""
 class TweetStreamListener(StreamListener):
 	# on success
     def on_data(self, data):
@@ -49,7 +53,7 @@ class TweetStreamListener(StreamListener):
                        "sentiment": sentiment,
                        "scoring": scoring,
                        "current_quote": stock_quote})
-
+            cHandler.execute(insert_query,(1, epoch, scoring, tweet.sentiment.polarity, tweet.sentiment.subjectivity, message, stock_quote))
         return True
 
     # on failure
