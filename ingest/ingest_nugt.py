@@ -18,7 +18,7 @@ company = 'NUGT'
 stock = "$NUGT"
 myDB = MySQLdb.connect(host="rongbin.cdpxz2jepyxw.us-east-1.rds.amazonaws.com",port=3306,user="root",passwd="12345678",db="twit")
 cHandler = myDB.cursor()
-insert_query = """INSERT INTO ratings (company_id, created_at, rating, polarity, subjectivity, message, current_price) VALUES (%s,%s,%s,%s,%s,%s,%s)"""
+insert_query = """INSERT INTO ratings (company_id, created_at, rating, polarity, subjectivity, message, current_price, inserted_at) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"""
 class TweetStreamListener(StreamListener):
 	# on success
     def on_data(self, data):
@@ -53,7 +53,10 @@ class TweetStreamListener(StreamListener):
                        "sentiment": sentiment,
                        "scoring": scoring,
                        "current_quote": stock_quote})
-            cHandler.execute(insert_query,(2, epoch, scoring, tweet.sentiment.polarity, tweet.sentiment.subjectivity, dict_data["text"].encode('utf-8'), stock_quote))
+            current_timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
+            cHandler.execute(insert_query,(3, epoch, scoring, tweet.sentiment.polarity, tweet.sentiment.subjectivity, dict_data["text"].encode('utf-8'), stock_quote, current_timestamp))
+            myDB.commit()
+            myDB.close()
         return True
 
     # on failure
