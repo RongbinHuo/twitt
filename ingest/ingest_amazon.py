@@ -16,15 +16,15 @@ from config import *
 es = Elasticsearch()
 company = 'Amazon'
 stock = "$AMZN"
-myDB = MySQLdb.connect(host="rongbin.cdpxz2jepyxw.us-east-1.rds.amazonaws.com",port=3306,user="root",passwd="12345678",db="twit")
-cHandler = myDB.cursor()
-insert_query = """INSERT INTO ratings (company_id, created_at, rating, polarity, subjectivity, message, current_price) VALUES (%s,%s,%s,%s,%s,%s,%s)"""
+insert_query = """INSERT INTO ratings (company_id, created_at, rating, polarity, subjectivity, message, current_price, inserted_at) VALUES (%s,%s,%s,%s,%s,%s,%s,%s)"""
 class TweetStreamListener(StreamListener):
 	# on success
     def on_data(self, data):
 
     	dict_data = json.loads(data)
         if 'text' in dict_data:
+            myDB = MySQLdb.connect(host="rongbin.cdpxz2jepyxw.us-east-1.rds.amazonaws.com",port=3306,user="root",passwd="12345678",db="twit")
+            cHandler = myDB.cursor()
             tweet = TextBlob(dict_data["text"])
     	    # print tweet.sentiment.polarity
             if tweet.sentiment.polarity < 0:
@@ -53,7 +53,10 @@ class TweetStreamListener(StreamListener):
                        "sentiment": sentiment,
                        "scoring": scoring,
                        "current_quote": stock_quote})
-            cHandler.execute(insert_query,(1, epoch, scoring, tweet.sentiment.polarity, tweet.sentiment.subjectivity, message, stock_quote))
+            current_timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
+            cHandler.execute(insert_query,(1, epoch, scoring, tweet.sentiment.polarity, tweet.sentiment.subjectivity, dict_data["text"].encode('utf-8'), stock_quote, current_timestamp))
+            myDB.commit()
+            myDB.close()
         return True
 
     # on failure
@@ -76,3 +79,4 @@ if __name__ == '__main__':
         stream.filter(track=[stock])
     except Exception, e:
         pass
+   

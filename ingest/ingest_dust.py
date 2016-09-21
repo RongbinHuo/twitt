@@ -53,7 +53,7 @@ class TweetStreamListener(StreamListener):
                        "sentiment": sentiment,
                        "scoring": scoring,
                        "current_quote": stock_quote})
-            cHandler.execute(insert_query,(2, epoch, scoring, tweet.sentiment.polarity, tweet.sentiment.subjectivity, message, stock_quote))
+            cHandler.execute(insert_query,(2, epoch, scoring, tweet.sentiment.polarity, tweet.sentiment.subjectivity, dict_data["text"].encode('utf-8'), stock_quote))
         return True
 
     # on failure
@@ -71,6 +71,7 @@ if __name__ == '__main__':
 
     # create instance of the tweepy stream
     stream = Stream(auth, listener)
+    #stream.filter(track=[stock])
     try:
         # search twitter for "congress" keyword
         stream.filter(track=[stock])
