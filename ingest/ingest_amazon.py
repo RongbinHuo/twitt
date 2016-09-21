@@ -74,9 +74,10 @@ if __name__ == '__main__':
 
     # create instance of the tweepy stream
     stream = Stream(auth, listener)
-    try:
+    stream.filter(track=[stock])
+    #try:
         # search twitter for "congress" keyword
-        stream.filter(track=[stock])
-    except Exception, e:
-        pass
+        #stream.filter(track=[stock])
+    #except Exception, e:
+        #pass
    
