@@ -31,13 +31,14 @@ m=0
 x=0
 for i in range(len(test_result)):
 	r = test_result[i]
-	print r
-	print test_x_train[i]
 	if r[0]>r[1] and test_y_train[i][0]<0 and r[0]>r[2]:
 		n=n+1
 	if r[0]<r[2] and test_y_train[i][0]>0 and r[1]<r[2]:
 		m=m+1
 	if r[1]>r[0] and test_y_train[i][0]==0 and r[1]>r[2]:
 		x=x+1
+right = n+m+x
+print "Total number of validations '%s'." % c
+print "Total number of correct validations '%s'." % right
 
 pickle.dump( clf, open( output_model_file, 'wb' ))
