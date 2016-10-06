@@ -26,7 +26,7 @@ def job():
   myDB.commit()
   myDB.close()
 
-schedule.every(10).hour.do(job)
+schedule.every(3).hours.do(job)
 
 while 1:
   schedule.run_pending()
