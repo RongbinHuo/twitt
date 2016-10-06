@@ -54,7 +54,7 @@ class TweetStreamListener(StreamListener):
                        "scoring": scoring,
                        "current_quote": stock_quote})
             current_timestamp = time.strftime('%Y-%m-%d %H:%M:%S')
-            cHandler.execute(insert_query,(2, epoch, scoring, tweet.sentiment.polarity, tweet.sentiment.subjectivity, message, stock_quote, current_timestamp))
+            cHandler.execute(insert_query,(2, epoch, scoring, tweet.sentiment.polarity, tweet.sentiment.subjectivity, dict_data["text"].encode('utf-8'), stock_quote, current_timestamp))
             myDB.commit()
             myDB.close()
         return True
@@ -74,8 +74,9 @@ if __name__ == '__main__':
 
     # create instance of the tweepy stream
     stream = Stream(auth, listener)
-    try:
+    stream.filter(track=[stock])
+    #try:
         # search twitter for "congress" keyword
-        stream.filter(track=[stock])
-    except Exception, e:
-        pass
+        #stream.filter(track=[stock])
+    #except Exception, e:
+        #pass
