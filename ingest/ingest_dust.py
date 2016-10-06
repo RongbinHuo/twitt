@@ -33,7 +33,7 @@ class TweetStreamListener(StreamListener):
                 sentiment = "neutral"
             else:
                 sentiment = "positive"
-            stock_quote = str(getQuotes('AMZN')[0]['LastTradePrice'])
+            stock_quote = str(getQuotes('DUST')[0]['LastTradePrice'])
 
             print sentiment
         
