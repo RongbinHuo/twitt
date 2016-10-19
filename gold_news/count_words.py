@@ -106,15 +106,15 @@ cHandler.execute(select_query)
 results = cHandler.fetchall()
 
 # Count words frequency in the documents
-for row in results:
-  link = row[2]
-  if 'www.kitco.com' in link:
-    print link
-    content_ary = parse_kitco_content(retrieve_content(link))
-    for c in content_ary:
-      if not to_discard(c):
-        count_words(c)
-print 'Count words done!'
+# for row in results:
+#   link = row[2]
+#   if 'www.kitco.com' in link:
+#     print link
+#     content_ary = parse_kitco_content(retrieve_content(link))
+#     for c in content_ary:
+#       if not to_discard(c):
+#         count_words(c)
+# print 'Count words done!'
 
 # Checking conflict words and words with no scoring
 for row in results:
