@@ -124,7 +124,6 @@ for row in results:
     content_ary = parse_kitco_content(retrieve_content(link))
     for c in content_ary:
       retrieve_conflict_words(c)
-    print conflict_words
 
 words_list = list(conflict_words)
 file_name = '../gold_news/conflict_words.txt'
