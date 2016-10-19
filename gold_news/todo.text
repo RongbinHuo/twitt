@@ -1,0 +1,24 @@
+1. Collect all nouns that a positive and negative related to Gold
+2. Split the whole article into sentences.
+3. Convert negated words into one word. (e.g. no, none, not)
+4. For each sentence, retrieve the Gold related features to construct a bi-gram
+5. Iteratively go through all collected news and construct the whole collect of Gold related features
+
+
+
+algorithm:
+	1. for all article parsing, only persist all sencences that contain positive and negative words and form a new article
+	2. for each sentence in the article, retrieve adjective and verb, find if all method has no score or the score are inverse, put it in to a document
+	3. seperate the words into positive and negative, also score, manually
+	4. for each news, build an array with all factors, both positive and negative. and using single sentence to so give a score.
+	5. use k means modle to train the set.
+
+
+
+
+
+
+
+Useful package:
+	1. from nltk.corpus import sentiwordnet as swn
+
