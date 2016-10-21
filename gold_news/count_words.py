@@ -8,12 +8,11 @@ from nltk.tokenize import sent_tokenize, word_tokenize
 from collections import Counter
 from textblob import TextBlob
 from nltk.tag import pos_tag
-from sets import Set
 from nltk.corpus import sentiwordnet as swn
 import nltk
 
 word_count={}
-conflict_words = Set()
+conflict_words = set()
 
 positive_words = ["gold", "yellow metal", "inflation", "fear", "CPI", "emerging markets", "euro", "imbalances", "oil", "demand",
  "Global Crisis", "Government Reserves", "Chinese economy", "Australian", "British", "pound", "silver", "sterling", "China", "brexit", "trump", "european", "yen", "risk", "bond", "mining", "weakness", "crash"]
