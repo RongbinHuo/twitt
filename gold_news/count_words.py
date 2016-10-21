@@ -10,7 +10,7 @@ from textblob import TextBlob
 from nltk.tag import pos_tag
 from nltk.corpus import sentiwordnet as swn
 import nltk
-import gold_news.share
+import share
 
 
 word_count={}
@@ -44,9 +44,9 @@ for row in results:
   link = row[2]
   if 'www.kitco.com' in link:
     print link
-    content_ary = parse_kitco_content(retrieve_content(link))
+    content_ary = share.parse_kitco_content(share.retrieve_content(link))
     for c in content_ary:
-      retrieve_conflict_words(c)
+      share.retrieve_conflict_words(c)
 
 words_list = list(conflict_words)
 file_name = '../gold_news/conflict_words.txt'
