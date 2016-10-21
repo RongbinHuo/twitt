@@ -10,7 +10,7 @@ from textblob import TextBlob
 from nltk.tag import pos_tag
 from nltk.corpus import sentiwordnet as swn
 import nltk
-import share
+import gold_news.share
 
 
 word_count={}
