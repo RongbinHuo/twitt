@@ -1,4 +1,4 @@
-ore:0.3
+ore: 0.3
 consolidated: 0.4
 retain: 0.2
 bearish: -0.9
