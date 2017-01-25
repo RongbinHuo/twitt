@@ -19,7 +19,8 @@ words_dic = {}
 
 def retrieve_content(link):
   try:
-    soup = BeautifulSoup(urllib2.urlopen(link).read())
+    req = urllib2.Request(link, headers={ 'User-Agent': 'Mozilla/5.0' })
+    soup = BeautifulSoup(urllib2.urlopen(req).read())
     if soup.find("div", {"itemprop": "articleBody"}) is not None:
       content = soup.find("div", {"itemprop": "articleBody"}).getText()
     else:
@@ -222,7 +223,7 @@ def analyze_sentence(sentence, word_ary):
   tagged_words = nltk.pos_tag(words_ary)
   for w in word_ary:
     word_score[w] = 0.0
-  if len(word_ary) == 1:
+  if len(words_ary) == 1:
     for word,pos in tagged_words:
       word_score[word_ary[0]] = word_score[word_ary[0]] + score(word,pos)
   else:

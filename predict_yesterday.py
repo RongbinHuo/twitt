@@ -1,5 +1,6 @@
 import numpy as np
 import cPickle as pickle
+import datetime
 from math import sqrt
 import sys, getopt
 import MySQLdb
@@ -9,10 +10,12 @@ from collections import Counter
 from pybrain.datasets.supervised import SupervisedDataSet as SDS
 
 def main(argv):
-    today_date = time.strftime("%Y-%m-%d")
+    dt = datetime.datetime.now()
+    yesterday = dt - datetime.timedelta(days=1)
+    yesterday_date = yesterday.strftime("%Y-%m-%d")
     myDB = MySQLdb.connect(host="rongbin.cdpxz2jepyxw.us-east-1.rds.amazonaws.com", port=3306, user="root", passwd="12345678",  db="twit")
     cHandler = myDB.cursor()
-    select_query = """SELECT id, text, link, create_at FROM gold_news WHERE DATE(create_at) >= '%s'""" % today_date
+    select_query = """SELECT id, text, link, create_at FROM gold_news WHERE DATE(create_at) = '%s'""" % yesterday_date
     cHandler.execute(select_query)
     results = cHandler.fetchall()
     current_score = Counter()
