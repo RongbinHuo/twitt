@@ -26,7 +26,7 @@ def main(argv):
             content_ary = share.parse_kitco_content(share.retrieve_content(link))
             tmp = share.final_score(share.scoring_article(content_ary))
             current_score.update(tmp)
-    model_file = '/home/ec2-user/twitt/model/neural_network_v1.pkl'
+    model_file = '/home/ec2-user/twitt/model/neural_network_v2.pkl'
     net = pickle.load( open( model_file, 'rb' ))
     new_ary = [p[1] for p in sorted(current_score.items())]
     print net.activate(new_ary)[0]

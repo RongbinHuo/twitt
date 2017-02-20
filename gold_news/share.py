@@ -21,11 +21,18 @@ def retrieve_content(link):
   try:
     req = urllib2.Request(link, headers={ 'User-Agent': 'Mozilla/5.0' })
     soup = BeautifulSoup(urllib2.urlopen(req).read())
-    if soup.find("div", {"itemprop": "articleBody"}) is not None:
-      content = soup.find("div", {"itemprop": "articleBody"}).getText()
-    else:
-      count=""
-    return str(content)
+    if 'www.kitco.com' in link:
+      if soup.find("div", {"itemprop": "articleBody"}) is not None:
+        content = soup.find("div", {"itemprop": "articleBody"}).getText()
+      else:
+        count=""
+      return str(content)
+    elif 'www.investing.com' in link:
+      if soup.find("div", {"class" : "arial_14 clear WYSIWYG newsPage"}) is not None:
+        content = soup.find("div", {"class" : "arial_14 clear WYSIWYG newsPage"}).getText()
+      else:
+        content=""
+      return str(content)
   except:
     return ""
 
@@ -246,3 +253,4 @@ def scoring_article(content_ary):
   for sent in content_ary:
     total.update(Counter(scoring_sentence(sent)))
   return dict(total)
+    
